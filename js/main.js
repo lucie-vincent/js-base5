@@ -8,6 +8,22 @@ for (quote of quotes) {
     // add() de la propriété classList
     citation.classList.add("citation")
     
+    const icone = document.createElement("i");
+    icone.classList.add("fa-regular");
+    icone.classList.add("fa-star");
+    icone.classList.add("icone");
+    citation.appendChild(icone);
+
+    const iconeClicked = document.createElement("i");
+    iconeClicked.classList.add("fa-solid");
+    iconeClicked.classList.add("fa-star");
+    iconeClicked.classList.add("icone-clicked");
+    citation.appendChild(iconeClicked);
+    
+    // icone.addEventListener("click", function() {
+    //     icones.classList.toggle("icone-clicked");
+    // })
+
     const content = document.createElement("p");
     // on ajoute la propriété innerHTML pour récupérer ou définir le contenu de l'élément content créé
     //plus haut
@@ -24,11 +40,23 @@ for (quote of quotes) {
     title.classList.add("title");
     title.innerHTML = ` - ${quote.title}`;
     citation.appendChild(title);
-
     
     // on ajoute au container tout notre bloc citation
     container.appendChild(citation)
 }
+
+
+localStorage.setItem("favoris1",`${quote.id}`);
+console.log(localStorage.getItem("favoris1"));
+
+
+
+
+
+
+
+
+
 
 // for (quote of quotes) {
 //     console.log(quote.author);
