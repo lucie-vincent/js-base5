@@ -4,43 +4,53 @@ console.log(container)
 // on récupère ce qui se trouve dans le localStorage
 let favoriteQuotes = JSON.parse(localStorage.getItem('favoriteQuotes')) || [];
 
-
 for (quote of quotes) {
-    // on crée une balise html div avec la méthode createElement()
-    const citation = document.createElement("div");
-    // on ajoute une classe à la balise div avec la méthode
-    // add() de la propriété classList
-    citation.classList.add("citation")
+    let citation = document.createElement("div");
+    citation.classList.add("citation");
+    citation.innerHTML =
+    `<div class=''>
+        <p class='id'>${quote.id}</p>
+        <p class='title'>${quote.title}</p>
+        <p class='content'>“${quote.content}”</p>
+        <p class='author'>- ${quote.author}</p>
+    </div>`;
     
     const heartIcon = document.createElement("div");
     heartIcon.classList.add('heart');
     heartIcon.setAttribute('data-id', quote.id);
     heartIcon.innerHTML =`<i class='${favoriteQuotes.includes(quote.id) ? "fa-solid active" : "fa-regular"} fa-heart' title='Add favorite'></i>`;
-
+    
     citation.appendChild(heartIcon);
     
     heartIcon.addEventListener('click', () => toggleFavorite(quote.id));
-
-    const title = document.createElement("p");
-    title.classList.add("title");
-    title.innerHTML = `${quote.title}`;
-    citation.appendChild(title);
-
-    const content = document.createElement("p");
-    content.classList.add("content");
-    // on ajoute la propriété innerHTML pour récupérer ou définir le contenu de l'élément content créé
-    //plus haut
-    content.innerHTML = `« ${quote.content} »`;
-    // on ajoute l'élément p au DOM, on le lie à l'élément citation
-    citation.appendChild(content);
-
-    const author = document.createElement("small");
-    author.classList.add("author");
-    author.innerHTML = `${quote.author}`;
-    citation.appendChild(author);
-
+    
     // on ajoute au container tout notre bloc citation
     container.appendChild(citation)
+
+    // // on crée une balise html div avec la méthode createElement()
+    // const citation = document.createElement("div");
+    // // on ajoute une classe à la balise div avec la méthode
+    // // add() de la propriété classList
+    // citation.classList.add("citation")
+    
+    // const title = document.createElement("p");
+    // title.classList.add("title");
+    // title.innerHTML = `${quote.title}`;
+    // citation.appendChild(title);
+
+    // const content = document.createElement("p");
+    // content.classList.add("content");
+    // // on ajoute la propriété innerHTML pour récupérer ou définir le contenu de l'élément content créé
+    // //plus haut
+    // content.innerHTML = `« ${quote.content} »`;
+    // // on ajoute l'élément p content  au DOM, on le lie à l'élément citation
+    // citation.appendChild(content);
+
+    // const author = document.createElement("small");
+    // author.classList.add("author");
+    // author.innerHTML = `${quote.author}`;
+    // citation.appendChild(author);
+
 }
 
 function toggleFavorite(quoteId) {
@@ -61,14 +71,6 @@ function toggleFavorite(quoteId) {
     // MàJ du localStorage avec les dernières citations favorites
     localStorage.setItem('favoriteQuotes', JSON.stringify(favoriteQuotes));
 }
-
-
-
-
-
-
-
-
 
 
 // for (quote of quotes) {
