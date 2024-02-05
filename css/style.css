@@ -25,29 +25,36 @@
     position: relative;
 }
 
-p {
+.citation .title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.citation .content {
     font-style: italic;
     padding: 10px 10px;
 }
 
-small {
+.citation .author {
+    text-align: right;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-i {
+.citation .heart {
     position: absolute;
     top: 5px;
     left: 5px;
+    cursor: pointer;
 }
 
-i.fa-regular.fa-star {
-    color: gold;
+.citation .heart i.active {
+    color: red;
+}
+
+.citation .i {
+    color: rgba(0, 0, 0, 0.664);
     font-size: 20px;
     cursor: pointer;
 }
 
-i.fa-solid.fa-star {
-    color: gold;
-    font-size: 20px;
-    cursor: pointer;
-}

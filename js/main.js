@@ -1,6 +1,10 @@
 const container = document.querySelector("#container");
 console.log(container)
 
+// on récupère ce qui se trouve dans le localStorage
+let favoriteQuotes = JSON.parse(localStorage.getItem('favoriteQuotes')) || [];
+
+
 for (quote of quotes) {
     // on crée une balise html div avec la méthode createElement()
     const citation = document.createElement("div");
@@ -8,23 +12,22 @@ for (quote of quotes) {
     // add() de la propriété classList
     citation.classList.add("citation")
     
-    const icone = document.createElement("i");
-    icone.classList.add("fa-regular");
-    icone.classList.add("fa-star");
-    icone.classList.add("icone");
-    citation.appendChild(icone);
+    const heartIcon = document.createElement("div");
+    heartIcon.classList.add('heart');
+    heartIcon.setAttribute('data-id', quote.id);
+    heartIcon.innerHTML =`<i class='${favoriteQuotes.includes(quote.id) ? "fa-solid active" : "fa-regular"} fa-heart' title='Add favorite'></i>`;
 
-    const iconeClicked = document.createElement("i");
-    iconeClicked.classList.add("fa-solid");
-    iconeClicked.classList.add("fa-star");
-    iconeClicked.classList.add("icone-clicked");
-    citation.appendChild(iconeClicked);
+    citation.appendChild(heartIcon);
     
-    // icone.addEventListener("click", function() {
-    //     icones.classList.toggle("icone-clicked");
-    // })
+    heartIcon.addEventListener('click', () => toggleFavorite(quote.id));
+
+    const title = document.createElement("p");
+    title.classList.add("title");
+    title.innerHTML = `${quote.title}`;
+    citation.appendChild(title);
 
     const content = document.createElement("p");
+    content.classList.add("content");
     // on ajoute la propriété innerHTML pour récupérer ou définir le contenu de l'élément content créé
     //plus haut
     content.innerHTML = `« ${quote.content} »`;
@@ -36,18 +39,28 @@ for (quote of quotes) {
     author.innerHTML = `${quote.author}`;
     citation.appendChild(author);
 
-    const title = document.createElement("small");
-    title.classList.add("title");
-    title.innerHTML = ` - ${quote.title}`;
-    citation.appendChild(title);
-    
     // on ajoute au container tout notre bloc citation
     container.appendChild(citation)
 }
 
+function toggleFavorite(quoteId) {
+    const heartIcon = document.querySelector(`.heart[data-id='${quoteId}'] i`);
 
-localStorage.setItem("favoris1",`${quote.id}`);
-console.log(localStorage.getItem("favoris1"));
+    if (favoriteQuotes.includes(quoteId)) {
+        // enlever la citation des favoris
+        favoriteQuotes = favoriteQuotes.filter(id => id !== quoteId);
+        heartIcon.classList.remove('fa-solid', 'active');
+        heartIcon.classList.add('fa-regular');
+    } else {
+        //ajouter la citation aux favoris
+        favoriteQuotes.push(quoteId);
+        heartIcon.classList.add('fa-solid', 'active');
+        heartIcon.classList.remove('fa-regular');
+    }
+
+    // MàJ du localStorage avec les dernières citations favorites
+    localStorage.setItem('favoriteQuotes', JSON.stringify(favoriteQuotes));
+}
 
 
 
